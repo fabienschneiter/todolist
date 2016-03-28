@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <link href='https://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
+  <!-- <link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'> -->
+  <meta charset="utf-8" />
+</head>
+
+
+
+
+<body>
+  <form id="formulaire">
+    <input id="saisie">
+    <div id="afaire">
+    </div>
+    <div id="faites">
+    </div>
+  </form>
+  <script>
+  var myDataRef = new Firebase('https://blistering-torch-4516.firebaseio.com');
+
+  document.getElementById('formulaire').onsubmit = function(evt) {
+    evt.preventDefault();
+    document.getElementById('saisie').value;
+    myDataRef.push({
+      name: document.getElementById('saisie').value,
+      done : false
+    });
+
+
+  };
+     myDataRef.on('child_added', function(snapshot) {
+       var message = snapshot.val();
+       console.log(message.name);
+       var afaire = document.getElementById('afaire');
+       afaire.innerHTML = afaire.innerHTML + '<p onclick="console.log(\' ' + message.name + ' \')">' + "<input type='checkbox' name'task'>" + message.name + "</p>";
+     }); 
+  </script>
+</body>
+</html>
